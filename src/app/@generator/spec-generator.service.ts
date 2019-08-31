@@ -13,7 +13,7 @@ import {
   TfTest,
 } from './generator-models';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SpecGeneratorService {
 
   generateSpec(spec: TfSpec): string {
