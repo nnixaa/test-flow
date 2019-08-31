@@ -84,9 +84,8 @@ export class Recorder {
   }
 
   private setupEventHandler() {
-    window.addEventListener('recorder', (event: any) => {
-
-      const target: HTMLElement = getElementByXPath(event.xpath) as HTMLElement;
+    window.addEventListener('recorder', (e: any) => {
+      const { detail: event } = e;
 
       // Don't emit new event if it's replay
       if (this.replaying || !this.recording) {
@@ -106,7 +105,6 @@ export class Recorder {
         this.events.next([...recordedEvents, { ...lastEvent, data: prevChar + event.data }]);
       } else {
         this.events.next([...this.events.getValue(), {
-          target,
           xpath: event.xpath,
           type: event.type,
           // @ts-ignore
@@ -141,11 +139,4 @@ export class Recorder {
       return segs(element).join('/');
     }
   }
-}
-
-function getElementByXPath(path) {
-  return (new XPathEvaluator())
-    .evaluate(path, document.documentElement, null,
-      XPathResult.FIRST_ORDERED_NODE_TYPE, null)
-    .singleNodeValue;
 }
