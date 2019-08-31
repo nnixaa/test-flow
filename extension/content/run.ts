@@ -21,8 +21,10 @@ import { initializeRecorder } from '../recorder/container';
   };
 
   const removeApp = () => {
-    document.body.removeChild(appElement);
-    appElement = null;
+    if (appElement) {
+      document.body.removeChild(appElement);
+      appElement = null;
+    }
   };
 
   chrome.runtime.onMessage.addListener((request) => {
