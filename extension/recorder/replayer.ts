@@ -22,11 +22,11 @@ export class Replayer extends EventReplayer {
         }
 
         if (event.type === 'click') {
-          event.target.dispatchEvent(event.event);
+          event.target.dispatchEvent(new Event('click'));
         }
 
         if (event.type === 'focusin') {
-          event.target.dispatchEvent(event.event);
+          event.target.dispatchEvent(new Event('focusin'));
         }
 
         return of();

@@ -8,8 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:chrome": "ng build && webpack --mode=development && node scripts/extension-build.js",
-    "build:chrome:prod": "ng build --prod && webpack && node scripts/extension-build.js"
+    "build:chrome": "node --max-old-space-size=8192 ./node_modules/.bin/ng build && webpack --mode=development && node scripts/extension-build.js",
+    "build:chrome:prod": "node --max-old-space-size=8192 ./node_modules/.bin/ng build --prod && webpack && node scripts/extension-build.js"
   },
   "private": true,
   "dependencies": {
