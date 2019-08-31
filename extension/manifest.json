@@ -10,8 +10,7 @@
     "storage"
   ],
   "browser_action": {
-    "default_icon": "favicon.ico",
-    "default_popup": "content/open-dialog.html"
+    "default_icon": "favicon.ico"
   },
   "web_accessible_resources": [
     "index.html"
@@ -21,5 +20,10 @@
       "matches": ["http://*/*", "https://*/*"],
       "js": ["content/run.js"]
     }
-  ]
+  ],
+  "background":{
+    "scripts": [
+      "background/start.js"
+    ]
+  }
 }
