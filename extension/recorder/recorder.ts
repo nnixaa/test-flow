@@ -21,7 +21,7 @@ const eventSelectors = [
   { selector: 'input,textarea', events: ['focusin', 'focusout'] },
 
   // user clicks on a button
-  { selector: 'button', events: ['click'] },
+  { selector: 'button,checkbox,input,span,div,i', events: ['click'] },
 ];
 
 const prebootOptions: PrebootOptions = {

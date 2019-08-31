@@ -45,6 +45,6 @@ function covertCommandListForTest(testId: string, commandList: Command[]) {
       // name: command.name,
       type: TfCommandType.EVENT,
       eventType: TfEventType.CLICK,
-      target: 'xpath',
+      target: command.target,
     }));
 }
