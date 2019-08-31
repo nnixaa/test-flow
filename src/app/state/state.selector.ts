@@ -42,7 +42,7 @@ function covertCommandListForTest(testId: string, commandList: Command[]) {
   return commandList
     .filter((command: Command) => command.test.id === testId)
     .map((command: Command) => ({
-      name: command.name,
+      // name: command.name,
       type: TfCommandType.EVENT,
       eventType: TfEventType.CLICK,
       target: 'xpath',

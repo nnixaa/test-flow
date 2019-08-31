@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
-import { select, State } from '@ngrx/store';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { select, State, Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/root-reducer';
-import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, take, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { getTestList, Test } from '../state/project/test.reducer';
 import { NbDialogService } from '@nebular/theme';
 import { AddCommandDialogComponent } from './add-test-dialog/add-command-dialog.component';
-import { Command, getCommandList } from '../state/project/command.reducer';
-import { Recorder } from '../recorder/recorder';
+import { Command, commandInitAction, getCommandList } from '../state/project/command.reducer';
 import { Location } from '@angular/common';
+import { RecordedEvent, Recorder } from 'src/app/recorder/recorder';
+import { TfCommandType, TfEventType } from 'src/app/@generator/generator-models';
 
 @Component({
   selector: 'tf-spec-component',
@@ -32,15 +33,13 @@ import { Location } from '@angular/common';
 
       <nb-layout-column>
 
-        <nb-list *ngIf="hasCommands$ | async; else recorderTemplate">
+        <tf-recorder-component></tf-recorder-component>
+
+        <nb-list *ngIf="hasCommands$ | async">
           <nb-list-item *ngFor="let command of commands$ | async">
-            <span class="subtitle-2">{{ command.name }}</span>
+            <span class="subtitle-2">{{ command.type }}</span>
           </nb-list-item>
         </nb-list>
-
-        <ng-template #recorderTemplate>
-          <tf-recorder-component></tf-recorder-component>
-        </ng-template>
 
       </nb-layout-column>
 
@@ -52,11 +51,13 @@ import { Location } from '@angular/common';
   `,
   styleUrls: ['./command-list.component.scss'],
 })
-export class CommandListComponent {
+export class CommandListComponent implements OnInit, OnDestroy {
+
+  private destroy$ = new Subject<void>();
 
   commands$: Observable<Command[]> = this.state.pipe(
     select(getCommandList),
-    map(commands => commands.filter(t => t.test.id === this.route.snapshot.paramMap.get('id'))),
+    map(commands => commands.filter(t => t.test.id === this.currentTestId())),
   );
 
   test$: Observable<Test> = this.state.pipe(
@@ -68,10 +69,27 @@ export class CommandListComponent {
 
   constructor(
     private state: State<AppState>,
+    private store: Store<AppState>,
     private route: ActivatedRoute,
     private dialogService: NbDialogService,
     private location: Location,
-  ) {
+    private recorder: Recorder,
+  ) {}
+
+  ngOnInit() {
+    this.recorder.events$
+      .pipe(
+        takeUntil(this.destroy$),
+        map(events => this.toCommand(events)),
+      )
+      .subscribe((commandList: Command[]) => {
+        this.store.dispatch(commandInitAction({ commandList }));
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   createTest() {
@@ -82,5 +100,29 @@ export class CommandListComponent {
 
   back() {
     this.location.back();
+  }
+
+  private currentTestId(): string {
+    return this.route.snapshot.paramMap.get('id');
+  }
+
+  private toCommand(events: RecordedEvent[]): Command[] {
+    return events.map(e => {
+      return {
+        type: TfCommandType.EVENT,
+        target: e.xpath,
+        eventType: this.mapEventType(e.type),
+        eventParams: e.data,
+        test: { id: this.currentTestId() },
+      };
+    });
+  }
+
+  private mapEventType(type: 'input' | 'click' | 'focusin'): TfEventType {
+    switch (type) {
+      case 'click': return TfEventType.CLICK;
+      case 'focusin': return TfEventType.FOCUS;
+      case 'input': return TfEventType.INPUT;
+    }
   }
 }
