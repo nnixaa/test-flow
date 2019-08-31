@@ -15,6 +15,7 @@ import {
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AppRoutingModule } from './app-routing.module';
+import { DownloadComponent } from './spec-list/download.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { StoreModule, USER_PROVIDED_META_REDUCERS } from '@ngrx/store';
 import { reducers, metaReducers } from './state/root-reducer';
@@ -32,6 +33,7 @@ import { AddCommandDialogComponent } from './command-list/add-test-dialog/add-co
     AppComponent,
     WelcomeComponent,
     SpecListComponent,
+    DownloadComponent,
     TestListComponent,
     CommandListComponent,
     AddSpecDialogComponent,
@@ -68,4 +70,5 @@ import { AddCommandDialogComponent } from './command-list/add-test-dialog/add-co
   bootstrap: [AppComponent],
   entryComponents: [AddSpecDialogComponent, AddTestDialogComponent, AddCommandDialogComponent],
 })
-export class AppModule { }
+export class AppModule {
+}
