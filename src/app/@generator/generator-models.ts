@@ -1,12 +1,12 @@
 export interface TfProject {
   name: string;
-  url: string;
   specList: TfSpec[];
 }
 
 // describe
 export interface TfSpec {
   name: string;
+  url: string;
   testList: TfTest[];
 }
 
