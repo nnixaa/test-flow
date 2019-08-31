@@ -49,13 +49,13 @@ export class AddCommandDialogComponent {
   }
 
   create() {
-    this.store.dispatch(commandAddAction({
-      command: {
-        id: nextId(),
-        name: this.name.value.trim(),
-        test: this.test,
-      }
-    }));
+    // this.store.dispatch(commandAddAction({
+    //   command: {
+    //     id: nextId(),
+    //     name: this.name.value.trim(),
+    //     test: this.test,
+    //   }
+    // }));
     this.close();
   }
 
