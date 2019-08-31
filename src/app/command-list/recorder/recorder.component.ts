@@ -18,7 +18,7 @@ import { Recorder } from 'src/app/recorder/recorder';
         <div class="circle-icon" [class.glow]="isRecording$ | async"></div>
         {{ (isRecording$ | async) ? 'Stop Recording' : 'Record Screen' }}
       </button>
-      <button class="control-button button-play" nbButton ghost (click)="replay()">
+      <button class="control-button button-play" size="large" nbButton ghost (click)="replay()">
         <nb-icon icon="arrow-right"></nb-icon>
       </button>
       <button class="control-button button-delete" nbButton ghost (click)="reset()">
