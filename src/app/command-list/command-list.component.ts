@@ -38,7 +38,7 @@ import { AddAssertDialogComponent } from './add-assert-dialog/add-assert-dialog.
 
         <nb-list *ngIf="hasCommands$ | async">
           <nb-list-item *ngFor="let command of commands$ | async">
-            <span class="subtitle-2">{{ command.type }}</span>
+            <span class="subtitle-2">{{ command.type }} {{ command.eventType || command.assertType ? (' - ' + (command.eventType || command.assertType)) : '' }}</span>
           </nb-list-item>
         </nb-list>
 
