@@ -8,9 +8,9 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'tf-spec-list-component',
   template: `
-    <ul *ngIf="hasSpecs$ | async; else noSpecsText">
+    <ul nbList *ngIf="hasSpecs$ | async; else noSpecsText">
       <li *ngFor="let spec of specs$ | async">
-        {{ spec.name }}
+        <a [routerLink]="['./spec', spec.id]">{{ spec.name }}</a>
       </li>
     </ul>
 

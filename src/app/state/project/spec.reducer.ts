@@ -1,7 +1,6 @@
 import { Action, createAction, createReducer, createSelector, on, props } from '@ngrx/store';
 import { AppState } from 'src/app/state/root-reducer';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { projectFeature, ProjectState } from 'src/app/state/project/project.reducer';
 
 export interface Spec {
   id: string;
