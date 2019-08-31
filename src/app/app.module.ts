@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbDialogModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AppRoutingModule } from './app-routing.module';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -28,6 +28,7 @@ import { reducers, metaReducers } from './state/root-reducer';
         strictActionImmutability: true
       }
     }),
+    NbDialogModule.forRoot(),
   ],
   providers: [
     { provide: USER_PROVIDED_META_REDUCERS, useValue: metaReducers },
