@@ -9,10 +9,26 @@ import { AppState } from 'src/app/state/root-reducer';
 @Component({
   selector: 'tf-project-component',
   template: `
-    {{ name$ | async }}
+    <nb-layout>
 
-    <tf-spec-list-component></tf-spec-list-component>
+      <nb-layout-header fixed>
+        {{ name$ | async }}
+      </nb-layout-header>
+
+      <nb-layout-column>
+        <tf-spec-list-component></tf-spec-list-component>
+      </nb-layout-column>
+
+      <nb-layout-footer fixed>
+        <a nbButton fullWidth size="small" class="download-button">
+          Get project specs code
+          <nb-icon icon="code-download-outline"></nb-icon>
+        </a>
+      </nb-layout-footer>
+
+    </nb-layout>
   `,
+  styleUrls: ['./project.component.scss'],
 })
 export class ProjectComponent {
 
