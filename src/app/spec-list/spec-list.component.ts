@@ -38,7 +38,7 @@ import { Location } from '@angular/common';
         </nb-list>
 
         <ng-template #noSpecsText>
-          <p>No Specs</p>
+          <p class="no-items caption-2">No Specs found.</p>
         </ng-template>
 
       </nb-layout-column>

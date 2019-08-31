@@ -40,7 +40,7 @@ import { Location } from '@angular/common';
         </nb-list>
 
         <ng-template #noTestsText>
-          <p>No Tests</p>
+          <p class="no-items caption-2">No Tests found.</p>
         </ng-template>
 
       </nb-layout-column>
