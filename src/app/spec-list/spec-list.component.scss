@@ -1,4 +1,4 @@
-@import '../../../themes';
+@import '../../themes';
 
 @include nb-install-component() {
   nb-list-item {
@@ -13,5 +13,9 @@
     a {
       text-decoration: none;
     }
+  }
+
+  .download-button {
+    color: white !important;
   }
 }

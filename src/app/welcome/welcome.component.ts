@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'tf-welcome-component',
   template: `
     <p>Welcome</p>
-    <a routerLink="/project">Project</a>
+    <a routerLink="/spec-list">Project</a>
   `,
 })
 export class WelcomeComponent {
