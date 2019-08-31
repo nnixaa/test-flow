@@ -24,6 +24,7 @@ import { DialogModule } from 'src/app/shared/dialog/dialog.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommandListComponent } from 'src/app/command-list/test-list.component';
 import { AddSpecDialogComponent } from 'src/app/spec-list/add-spec-dialog/add-spec-dialog.component';
+import { AddTestDialogComponent } from './test-list/add-test-dialog/add-test-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { AddSpecDialogComponent } from 'src/app/spec-list/add-spec-dialog/add-sp
     TestListComponent,
     CommandListComponent,
     AddSpecDialogComponent,
+    AddTestDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,6 +64,6 @@ import { AddSpecDialogComponent } from 'src/app/spec-list/add-spec-dialog/add-sp
     { provide: USER_PROVIDED_META_REDUCERS, useValue: metaReducers },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [AddSpecDialogComponent],
+  entryComponents: [AddSpecDialogComponent, AddTestDialogComponent],
 })
 export class AppModule { }
