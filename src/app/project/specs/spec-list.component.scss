@@ -1,0 +1,17 @@
+@import '../../../themes';
+
+@include nb-install-component() {
+  nb-list-item {
+    background: nb-theme(background-basic-color-1);
+    border: 1px solid nb-theme(list-item-divider-color);
+    border-radius: 0.25rem;
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+}
