@@ -17,7 +17,7 @@ import { initializeRecorder } from '../recorder/container';
 
     appElement = iframe;
 
-    initializeRecorder();
+    initializeRecorder(iframe);
   };
 
   const removeApp = () => {

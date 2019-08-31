@@ -13,20 +13,21 @@ export class Replayer extends EventReplayer {
       concatMap((event: RecordedEvent) => of(event).pipe(delay(500))),
       concatMap((event: RecordedEvent) => {
 
+        const target = getElementByXPath(event.xpath);
+
         if (event.type === 'input') {
-          const target: HTMLInputElement = event.target as HTMLInputElement;
           return fromArray([...event.data]).pipe(
             concatMap((char: string) => of(char).pipe(delay(300))),
-            tap((char: string) => target.value += char),
+            tap((char: string) => (target as HTMLInputElement).value += char),
           );
         }
 
         if (event.type === 'click') {
-          event.target.dispatchEvent(event.event);
+          target.dispatchEvent(new Event('click'));
         }
 
         if (event.type === 'focusin') {
-          event.target.dispatchEvent(event.event);
+          target.dispatchEvent(new Event('focusin'));
         }
 
         return of();
@@ -35,4 +36,11 @@ export class Replayer extends EventReplayer {
       }),
     );
   }
+}
+
+function getElementByXPath(path) {
+  return (new XPathEvaluator())
+    .evaluate(path, document.documentElement, null,
+      XPathResult.FIRST_ORDERED_NODE_TYPE, null)
+    .singleNodeValue;
 }

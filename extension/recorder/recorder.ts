@@ -58,6 +58,8 @@ export class Recorder {
     const script = document.createElement('script');
     script.textContent = inlineCodeDefinition + inlineCodeInvocation;
     document.body.appendChild(script);
+
+    this.setupEventHandler();
   }
 
   start(): void {
@@ -81,40 +83,60 @@ export class Recorder {
     this.events.next([]);
   }
 
+  private setupEventHandler() {
+    window.addEventListener('recorder', (e: any) => {
+      const { detail: event } = e;
+
+      // Don't emit new event if it's replay
+      if (this.replaying || !this.recording) {
+        return;
+      }
+
+      const recordedEvents: RecordedEvent[] = [...this.events.getValue()];
+
+      const lastEvent = recordedEvents.pop();
+
+      // If user typing we're buffering all input events in one
+      if (lastEvent && lastEvent.type === 'input' && event.type === 'input') {
+        // @ts-ignore
+        console.log(this.events.getValue(), recordedEvents);
+        const prevChar = lastEvent.data || '';
+        // @ts-ignore
+        this.events.next([...recordedEvents, { ...lastEvent, data: prevChar + event.data }]);
+      } else {
+        this.events.next([...this.events.getValue(), {
+          xpath: event.xpath,
+          type: event.type,
+          // @ts-ignore
+          data: event.data,
+        }]);
+      }
+    });
+  }
+
   private handleEvent = (target: HTMLElement, event: Event) => {
-    const { id } = target;
-    // TODO remove
-    if (id === 'start' || id === 'stop' || id === 'replay' || id === 'reset') {
-      return;
-    }
+    const xpath = getXPathForElement(target);
 
-    // @ts-ignore
-    const player = window.player;
-
-    // Don't emit new event if it's replay
-    if (player.replaying || !player.recording) {
-      return;
-    }
-
-    const recordedEvents: RecordedEvent[] = [...player.events.getValue()];
-
-    const lastEvent = recordedEvents.pop();
-
-    // If user typing we're buffering all input events in one
-    if (lastEvent && lastEvent.type === 'input' && event.type === 'input') {
-      // @ts-ignore
-      console.log(player.events.getValue(), recordedEvents);
-      const prevChar = lastEvent.data || '';
-      // @ts-ignore
-      player.events.next([...recordedEvents, { ...lastEvent, data: prevChar + event.data }]);
-    } else {
-      player.events.next([...player.events.getValue(), {
-        target,
-        event,
+    window.dispatchEvent(new CustomEvent<any>('recorder', {
+      detail: {
+        xpath,
         type: event.type,
         // @ts-ignore
         data: event.data,
-      }]);
+      },
+    }));
+
+    function getXPathForElement(element) {
+      const idx = (sib, name) => sib
+        ? idx(sib.previousElementSibling, name || sib.localName) + (sib.localName == name)
+        : 1;
+      const segs = elm => !elm || elm.nodeType !== 1
+        ? ['']
+        : elm.id && document.getElementById(elm.id) === elm
+          ? [`id("${elm.id}")`]
+          // @ts-ignore
+          : [...segs(elm.parentNode), `${elm.localName.toLowerCase()}[${idx(elm)}]`];
+      return segs(element).join('/');
     }
-  };
+  }
 }
