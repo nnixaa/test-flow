@@ -22,7 +22,7 @@ import { testAddAction } from '../../state/project/test.reducer';
             [formControl]="name">
         </nb-card-body>
         <nb-card-footer>
-          <button nbButton fullWidth status="info" size="small" (click)="close()">Cancel</button>
+          <a href="#" nbButton fullWidth status="info" size="small" (click)="close()">Cancel</a>
           <button nbButton fullWidth status="success" size="small" [disabled]="name.errors">Create</button>
         </nb-card-footer>
       </nb-card>
