@@ -21,13 +21,13 @@ export class SpecGeneratorService {
       .map((test: TfTest) => this.generateTest(test))
       .join('\n');
     const code = `
-      import { element, by } from 'protractor'
+      import { browser, element, by } from 'protractor'
 
-      describe('${spec.name}', function() {
+      describe('${spec.name}', () => {
         \n${testListString}\n
       });
     `;
-    return prettier.format(code, { parser: 'typescript', plugins: [parserTs] });
+    return prettier.format(code, { parser: 'typescript', plugins: [parserTs], singleQuote: true });
   }
 
   private generateTest(test: TfTest): string {
@@ -35,7 +35,7 @@ export class SpecGeneratorService {
       .map((command: TfCommand) => this.generateCommand(command))
       .join('\n');
     return `
-      it('${test.name}', function() {
+      it('${test.name}', () => {
         \n${commandListString}\n
       });
     `;
@@ -72,12 +72,12 @@ export class SpecGeneratorService {
   }
 
   private getTarget(command: TfCommand): string {
-    let element = `by.xpath('${command.target}')`;
+    let element = `element(by.xpath('${command.target}'))`;
     if (command.type === TfCommandType.ASSERT
       && (command as TfAssertCommand).assertType === TfAssertType.CONTAINS_TEXT) {
       element += '.getText()';
     }
-    return `element(${element})`;
+    return element;
   }
 
 

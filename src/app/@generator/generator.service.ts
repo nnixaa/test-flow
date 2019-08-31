@@ -15,7 +15,6 @@ export class GeneratorService {
     for (const spec of project.specList) {
       fileList.push({ fileName: this.getFileName(spec.name), content: this.specGenerator.generateSpec(spec) });
     }
-    fileList.push({ fileName: 'conf.json', content: this.getConfFile() });
     return fileList;
       // .map((data: { fileName: string, content: string }) => `// ${data.fileName}.ts\n\n${data.content}`)
       // .join('\n');
@@ -27,7 +26,7 @@ export class GeneratorService {
       .replace((/([a-z\d])([A-Z]+)/g), '$1_$2')
       .replace((/-|\s+/g), '_')
       .toLowerCase()
-      .replace(/_/ig, '-') + '.ts';
+      .replace(/_/ig, '-') + '.e2e-spec.ts';
   }
 
   private capitalize(str: string): string {
@@ -40,22 +39,6 @@ export class GeneratorService {
         return chr ? chr.toUpperCase() : '';
       })
       .replace(/^([A-Z])/, (match: string) => match.toLowerCase());
-  }
-
-  private getConfFile(): string {
-    return `exports.config = {
-  directConnect: true,
-
-  framework: 'jasmine2',
-
-  specs: [
-    'spec.js'
-  ],
-
-  capabilities: {
-    'browserName': 'chrome'
-  },
-};`;
   }
 
 }

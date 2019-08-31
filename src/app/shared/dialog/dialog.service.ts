@@ -5,7 +5,7 @@ export class DialogService extends NbDialogService {
   protected createPositionStrategy(): NbGlobalPositionStrategy {
     return this.positionBuilder
       .global()
-      .top('40px')
+      .top('32px')
       .centerHorizontally();
   }
 }

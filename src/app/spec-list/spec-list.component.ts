@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { AddSpecDialogComponent } from './add-spec-dialog/add-spec-dialog.component';
 import { NbDialogService } from '@nebular/theme';
 import { getProject, Project } from 'src/app/state/project/project.reducer';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'tf-spec-list-component',
@@ -14,7 +15,11 @@ import { getProject, Project } from 'src/app/state/project/project.reducer';
     <nb-layout>
 
       <nb-layout-header fixed>
-        <span class="subtitle text-hint">{{ name$ | async }}</span>
+        <button class="back" nbButton status="primary" (click)="back()">
+          <nb-icon icon="arrow-back-outline"></nb-icon>
+        </button>
+
+        <span class="subtitle-2 text-hint">{{ name$ | async }}</span>
 
         <button class="create-button" nbButton ghost size="small" (click)="createSpec()">
           New Spec
@@ -33,7 +38,7 @@ import { getProject, Project } from 'src/app/state/project/project.reducer';
         </nb-list>
 
         <ng-template #noSpecsText>
-          <p>No Specs</p>
+          <p class="no-items caption-2">No Specs found.</p>
         </ng-template>
 
       </nb-layout-column>
@@ -59,9 +64,13 @@ export class SpecListComponent {
 
   hasSpecs$: Observable<boolean> = this.specs$.pipe(map(specs => !!specs.length));
 
-  constructor(private store: Store<AppState>, private dialogService: NbDialogService) {}
+  constructor(private store: Store<AppState>, private dialogService: NbDialogService, private location: Location) {}
 
   createSpec() {
     this.dialogService.open(AddSpecDialogComponent);
+  }
+
+  back() {
+    this.location.back();
   }
 }

@@ -27,6 +27,7 @@ import { CommandListComponent } from 'src/app/command-list/command-list.componen
 import { AddSpecDialogComponent } from 'src/app/spec-list/add-spec-dialog/add-spec-dialog.component';
 import { AddTestDialogComponent } from './test-list/add-test-dialog/add-test-dialog.component';
 import { AddCommandDialogComponent } from './command-list/add-test-dialog/add-command-dialog.component';
+import { RecorderComponent } from 'src/app/command-list/recorder/recorder.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { AddCommandDialogComponent } from './command-list/add-test-dialog/add-co
     AddSpecDialogComponent,
     AddTestDialogComponent,
     AddCommandDialogComponent,
+    RecorderComponent,
   ],
   imports: [
     BrowserModule,

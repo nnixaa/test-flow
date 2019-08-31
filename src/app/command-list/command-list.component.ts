@@ -9,6 +9,7 @@ import { NbDialogService } from '@nebular/theme';
 import { AddCommandDialogComponent } from './add-test-dialog/add-command-dialog.component';
 import { Command, getCommandList } from '../state/project/command.reducer';
 import { Recorder } from '../recorder/recorder';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'tf-spec-component',
@@ -16,7 +17,12 @@ import { Recorder } from '../recorder/recorder';
     <nb-layout>
 
       <nb-layout-header fixed>
-        {{ (test$ | async)?.name }}
+
+        <button class="back" nbButton status="primary" (click)="back()">
+          <nb-icon icon="arrow-back-outline"></nb-icon>
+        </button>
+
+        <span class="subtitle-2 text-hint">{{ (test$ | async)?.name }}</span>
 
         <button class="create-button" nbButton ghost size="small" (click)="createTest()">
           New Command
@@ -26,20 +32,15 @@ import { Recorder } from '../recorder/recorder';
 
       <nb-layout-column>
 
-        <nb-list *ngIf="hasCommands$ | async; else noTestsText">
+        <nb-list *ngIf="hasCommands$ | async; else recorderTemplate">
           <nb-list-item *ngFor="let command of commands$ | async">
             <span class="subtitle-2">{{ command.name }}</span>
           </nb-list-item>
         </nb-list>
 
-        <ng-template #noTestsText>
-          <p>No Tests</p>
+        <ng-template #recorderTemplate>
+          <tf-recorder-component></tf-recorder-component>
         </ng-template>
-
-        <button nbButton (click)="start()">Start</button>
-        <button nbButton (click)="stop()">Stop</button>
-        <button nbButton (click)="reset()">Reset</button>
-        <button nbButton (click)="replay()">Replay</button>
 
       </nb-layout-column>
 
@@ -68,9 +69,12 @@ export class CommandListComponent {
 
   hasCommands$: Observable<boolean> = this.commands$.pipe(map(tests => !!tests.length));
 
-  constructor(private state: State<AppState>, private route: ActivatedRoute, private dialogService: NbDialogService,
-              private recorder: Recorder) {
-  }
+  constructor(
+    private state: State<AppState>,
+    private route: ActivatedRoute,
+    private dialogService: NbDialogService,
+    private location: Location,
+  ) {}
 
   createTest() {
     this.test$.pipe(take(1)).subscribe((test) => {
@@ -78,19 +82,7 @@ export class CommandListComponent {
     });
   }
 
-  start() {
-    this.recorder.start();
-  }
-
-  stop() {
-    this.recorder.stop();
-  }
-
-  reset() {
-    this.recorder.reset();
-  }
-
-  replay() {
-    this.recorder.replay();
+  back() {
+    this.location.back();
   }
 }

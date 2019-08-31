@@ -1,6 +1,13 @@
 @import '../../themes';
 
 @include nb-install-component() {
+
+  .back {
+    padding: 0.25rem;
+    border-radius: 0;
+    margin-right: 0.5rem;
+  }
+
   nb-list-item {
     background: nb-theme(background-basic-color-1);
     border: 1px solid nb-theme(list-item-divider-color);
@@ -22,11 +29,16 @@
   .create-button {
     margin-left: auto;
     text-transform: capitalize;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0;
 
     nb-icon {
       margin-left: 0.5rem;
     }
+  }
+
+  .no-items {
+    display: flex;
+    justify-content: center;
+    margin-top: 30%;
   }
 }
