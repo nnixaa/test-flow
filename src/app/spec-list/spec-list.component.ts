@@ -14,7 +14,12 @@ import { getProject, Project } from 'src/app/state/project/project.reducer';
     <nb-layout>
 
       <nb-layout-header fixed>
-        {{ name$ | async }}
+        <span class="subtitle text-hint">{{ name$ | async }}</span>
+
+        <button class="create-button" nbButton ghost size="small" (click)="createSpec()">
+          New Spec
+          <nb-icon icon="file-add"></nb-icon>
+        </button>
       </nb-layout-header>
 
       <nb-layout-column>
@@ -30,8 +35,6 @@ import { getProject, Project } from 'src/app/state/project/project.reducer';
         <ng-template #noSpecsText>
           <p>No Specs</p>
         </ng-template>
-
-        <button (click)="createSpec()">create spec</button>
 
       </nb-layout-column>
 
