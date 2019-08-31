@@ -26,20 +26,15 @@ import { Recorder } from '../recorder/recorder';
 
       <nb-layout-column>
 
-        <nb-list *ngIf="hasCommands$ | async; else noTestsText">
+        <nb-list *ngIf="hasCommands$ | async; else recorderTemplate">
           <nb-list-item *ngFor="let command of commands$ | async">
             <span class="subtitle-2">{{ command.name }}</span>
           </nb-list-item>
         </nb-list>
 
-        <ng-template #noTestsText>
-          <p>No Tests</p>
+        <ng-template #recorderTemplate>
+          <tf-recorder-component></tf-recorder-component>
         </ng-template>
-
-        <button nbButton (click)="start()">Start</button>
-        <button nbButton (click)="stop()">Stop</button>
-        <button nbButton (click)="reset()">Reset</button>
-        <button nbButton (click)="replay()">Replay</button>
 
       </nb-layout-column>
 
@@ -68,29 +63,15 @@ export class CommandListComponent {
 
   hasCommands$: Observable<boolean> = this.commands$.pipe(map(tests => !!tests.length));
 
-  constructor(private state: State<AppState>, private route: ActivatedRoute, private dialogService: NbDialogService,
-              private recorder: Recorder) {
-  }
+  constructor(
+    private state: State<AppState>,
+    private route: ActivatedRoute,
+    private dialogService: NbDialogService,
+  ) {}
 
   createTest() {
     this.test$.pipe(take(1)).subscribe((test) => {
       this.dialogService.open(AddCommandDialogComponent, { context: { test } });
     });
-  }
-
-  start() {
-    this.recorder.start();
-  }
-
-  stop() {
-    this.recorder.stop();
-  }
-
-  reset() {
-    this.recorder.reset();
-  }
-
-  replay() {
-    this.recorder.replay();
   }
 }
