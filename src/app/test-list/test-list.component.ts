@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
     {{ spec$ | async | json }}
   `,
 })
-export class SpecComponent {
+export class TestListComponent {
 
   spec$: Observable<Spec> = this.state.pipe(
     select(getSpecList),

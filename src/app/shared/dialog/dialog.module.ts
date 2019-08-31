@@ -7,7 +7,7 @@ import { DialogService } from './dialog.service';
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
   ],
 })
 export class DialogModule {

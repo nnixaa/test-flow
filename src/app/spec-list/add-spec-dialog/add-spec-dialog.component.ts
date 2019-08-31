@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { FormControl, Validators } from '@angular/forms';
-import { specAddAction } from '../../../state/project/spec.reducer';
+import { specAddAction } from '../../state/project/spec.reducer';
 import { Store } from '@ngrx/store';
-import { AppState, nextId } from '../../../state/root-reducer';
+import { AppState, nextId } from '../../state/root-reducer';
 
 @Component({
   selector: 'tf-add-spec-dialog',
