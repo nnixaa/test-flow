@@ -45,10 +45,7 @@ import { Location } from '@angular/common';
       </nb-layout-column>
 
       <nb-layout-footer fixed>
-        <a nbButton fullWidth size="small" class="download-button">
-          Get project tests code
-          <nb-icon icon="code-download-outline"></nb-icon>
-        </a>
+        <tf-download-button></tf-download-button>
       </nb-layout-footer>
 
     </nb-layout>
@@ -74,7 +71,8 @@ export class CommandListComponent {
     private route: ActivatedRoute,
     private dialogService: NbDialogService,
     private location: Location,
-  ) {}
+  ) {
+  }
 
   createTest() {
     this.test$.pipe(take(1)).subscribe((test) => {
