@@ -14,9 +14,11 @@ const adapter = createEntityAdapter<Spec>();
 const initialState: SpecState = adapter.getInitialState({});
 
 export const specInitAction = createAction('[Spec] Init', props<{specList: Spec[]}>());
+export const specAddAction = createAction('[Spec] Add', props<{spec: Spec}>());
 
 const reducer = createReducer(initialState,
   on(specInitAction, (state, action) => adapter.addAll(action.specList, state)),
+  on(specAddAction, (state, action) => adapter.addOne(action.spec, state)),
 );
 
 export function specReducer(state: SpecState, action: Action) {

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { FormControl, Validators } from '@angular/forms';
+import { specAddAction } from '../../../state/project/spec.reducer';
+import { Store } from '@ngrx/store';
+import { AppState, nextId } from '../../../state/root-reducer';
 
 @Component({
   selector: 'tf-add-spec-dialog',
@@ -35,14 +38,15 @@ export class AddSpecDialogComponent {
     ],
   );
 
-  constructor(protected dialogRef: NbDialogRef<AddSpecDialogComponent>) { }
+  constructor(protected dialogRef: NbDialogRef<AddSpecDialogComponent>, private store: Store<AppState>) { }
 
   close() {
     this.dialogRef.close();
   }
 
   create() {
-    console.log(this.name.value.trim());
+    this.store.dispatch(specAddAction({ spec: { id: nextId(), name: this.name.value.trim() } }));
+    this.close();
   }
 
 }
