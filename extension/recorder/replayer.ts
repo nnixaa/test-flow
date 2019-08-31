@@ -1,6 +1,6 @@
 import { EventReplayer } from 'preboot';
 import { Observable, of } from 'rxjs';
-import { concatMap, delay, map, tap } from 'rxjs/operators';
+import { catchError, concatMap, delay, map, tap } from 'rxjs/operators';
 import { fromArray } from 'rxjs/internal/observable/fromArray';
 
 import { RecordedEvent } from './model';
@@ -30,6 +30,10 @@ export class Replayer extends EventReplayer {
           target.dispatchEvent(new Event('focusin'));
         }
 
+        return of();
+      }),
+      catchError((err) => {
+        debugger;
         return of();
       }),
       map(() => {

@@ -27,9 +27,9 @@ export const initializeRecorder = (iframe: HTMLIFrameElement) => {
   receiveMessage('recorder:start').subscribe(() => recorder.start());
   receiveMessage('recorder:stop').subscribe(() => recorder.stop());
   receiveMessage('recorder:reset').subscribe(() => recorder.reset());
-  receiveMessage('recorder:replay').subscribe((events: RecordedEvent[]) => {
+  receiveMessage('recorder:replay').subscribe((events: any) => {
     console.info('[CONTENT] Replay Events', { events });
-    recorder.replay(events);
+    recorder.replay(events.events).subscribe();
   });
 };
 
