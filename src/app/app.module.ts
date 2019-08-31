@@ -12,6 +12,7 @@ import {
   NbIconModule,
   NbCardModule,
   NbDialogModule,
+  NbSelectModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AppRoutingModule } from './app-routing.module';
@@ -28,6 +29,7 @@ import { AddSpecDialogComponent } from 'src/app/spec-list/add-spec-dialog/add-sp
 import { AddTestDialogComponent } from './test-list/add-test-dialog/add-test-dialog.component';
 import { AddCommandDialogComponent } from './command-list/add-test-dialog/add-command-dialog.component';
 import { RecorderComponent } from 'src/app/command-list/recorder/recorder.component';
+import { AddAssertDialogComponent } from './command-list/add-assert-dialog/add-assert-dialog.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { RecorderComponent } from 'src/app/command-list/recorder/recorder.compon
     AddTestDialogComponent,
     AddCommandDialogComponent,
     RecorderComponent,
+    AddAssertDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,12 +68,13 @@ import { RecorderComponent } from 'src/app/command-list/recorder/recorder.compon
     DialogModule.forChild(),
     FormsModule,
     ReactiveFormsModule,
+    NbSelectModule,
   ],
   providers: [
     { provide: USER_PROVIDED_META_REDUCERS, useValue: metaReducers },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [AddSpecDialogComponent, AddTestDialogComponent, AddCommandDialogComponent],
+  entryComponents: [AddSpecDialogComponent, AddTestDialogComponent, AddCommandDialogComponent, AddAssertDialogComponent],
 })
 export class AppModule {
 }

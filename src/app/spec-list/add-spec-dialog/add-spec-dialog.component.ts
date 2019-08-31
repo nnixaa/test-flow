@@ -21,7 +21,7 @@ import { AppState, nextId } from '../../state/root-reducer';
             [formControl]="name">
         </nb-card-body>
         <nb-card-footer>
-          <a href="#" nbButton fullWidth status="info" size="small" (click)="close()">Cancel</a>
+          <a href="#" nbButton fullWidth status="info" size="small" (click)="close();false">Cancel</a>
           <button nbButton fullWidth status="success" size="small" [disabled]="name.errors">Create</button>
         </nb-card-footer>
       </nb-card>

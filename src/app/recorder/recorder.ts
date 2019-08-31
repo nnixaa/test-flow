@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
+import { BehaviorSubject, fromEvent, Observable, of } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 
 export type MessageType =

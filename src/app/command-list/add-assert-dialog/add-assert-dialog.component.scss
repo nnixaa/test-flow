@@ -1,0 +1,23 @@
+:host {
+  display: block;
+  width: 100vw;
+}
+
+button:last-child {
+  margin-left: 1rem;
+}
+
+nb-card-footer {
+  display: flex;
+}
+
+.form-row {
+  margin-bottom: 1rem;
+}
+.label {
+  display: block;
+  margin-bottom: 0.375rem;
+}
+.inspect {
+  margin-left: 0!important;
+}

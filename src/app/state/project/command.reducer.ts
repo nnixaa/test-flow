@@ -16,7 +16,7 @@ export interface AssertCommand extends BaseCommand {
 }
 
 export interface EventCommand extends BaseCommand {
-  eventType: TfEventType;
+  eventType?: TfEventType;
   eventParams?: any;
 }
 

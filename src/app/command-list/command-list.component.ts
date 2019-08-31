@@ -11,6 +11,7 @@ import { Command, commandInitAction, getCommandList } from '../state/project/com
 import { Location } from '@angular/common';
 import { RecordedEvent, Recorder } from 'src/app/recorder/recorder';
 import { TfCommandType, TfEventType } from 'src/app/@generator/generator-models';
+import { AddAssertDialogComponent } from './add-assert-dialog/add-assert-dialog.component';
 
 @Component({
   selector: 'tf-spec-component',
@@ -25,8 +26,8 @@ import { TfCommandType, TfEventType } from 'src/app/@generator/generator-models'
 
         <span class="subtitle-2 text-hint">{{ (test$ | async)?.name }}</span>
 
-        <button class="create-button" nbButton ghost size="small" (click)="createTest()">
-          New Command
+        <button class="create-button" nbButton ghost size="small" (click)="createAssert()">
+          New Assert
           <nb-icon icon="file-add"></nb-icon>
         </button>
       </nb-layout-header>
@@ -95,6 +96,12 @@ export class CommandListComponent implements OnInit, OnDestroy {
   createTest() {
     this.test$.pipe(take(1)).subscribe((test) => {
       this.dialogService.open(AddCommandDialogComponent, { context: { test } });
+    });
+  }
+
+  createAssert() {
+    this.test$.pipe(take(1)).subscribe((test) => {
+      this.dialogService.open(AddAssertDialogComponent, { context: { test } });
     });
   }
 
