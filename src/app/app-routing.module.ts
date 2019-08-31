@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { TestListComponent } from 'src/app/test-list/test-list.component';
 import { SpecListComponent } from 'src/app/spec-list/spec-list.component';
-import { CommandListComponent } from 'src/app/command-list/test-list.component';
+import { CommandListComponent } from 'src/app/command-list/command-list.component';
 
 const routes: Routes = [
   {
