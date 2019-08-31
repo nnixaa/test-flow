@@ -46,15 +46,12 @@ import { Location } from '@angular/common';
       </nb-layout-column>
 
       <nb-layout-footer fixed>
-        <a nbButton fullWidth size="small" class="download-button">
-          Get project tests code
-          <nb-icon icon="code-download-outline"></nb-icon>
-        </a>
+        <tf-download-button></tf-download-button>
       </nb-layout-footer>
 
     </nb-layout>
   `,
-  styleUrls: [ './test-list.component.scss' ],
+  styleUrls: ['./test-list.component.scss'],
 })
 export class TestListComponent {
 
@@ -73,11 +70,12 @@ export class TestListComponent {
   constructor(private state: State<AppState>,
               private route: ActivatedRoute,
               private dialogService: NbDialogService,
-              private location: Location) {}
+              private location: Location) {
+  }
 
   createTest() {
     this.spec$.pipe(take(1)).subscribe((spec) => {
-      this.dialogService.open(AddTestDialogComponent, { context: { spec }});
+      this.dialogService.open(AddTestDialogComponent, { context: { spec } });
     });
   }
 

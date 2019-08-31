@@ -30,15 +30,23 @@
   }
 
   .control-button {
-    margin: 0 0.5rem;
+    margin: 0 0.25rem;
+    padding: 0.5rem 0.25rem;
   }
 
   [nbbutton].button-play.status-primary,
   [nbbutton].button-delete.status-primary {
     color: black;
+    &:hover {
+      color: #696969;
+    }
   }
 
   .button-play {
     margin-left: auto;
+
+    ::ng-deep nb-icon {
+      font-size: 1.75rem;
+    }
   }
 }

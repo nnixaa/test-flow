@@ -26,7 +26,7 @@ export class SpecGeneratorService {
       describe('${spec.name}', () => {
 
         beforeEach(done => {
-           browser.get(${spec.url}).then(() => done());
+           browser.get('${spec.url}').then(() => done());
         });
 
         \n${testListString}\n
