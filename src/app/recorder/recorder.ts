@@ -14,22 +14,23 @@ export interface Message {
 @Injectable({ providedIn: 'root' })
 export class Recorder {
   start() {
-    sendMessage({ type: 'recorder:start', payload: {} });
+    this.sendMessage({ type: 'recorder:start', payload: {} });
   }
 
   stop() {
-    sendMessage({ type: 'recorder:stop', payload: {} });
+    this.sendMessage({ type: 'recorder:stop', payload: {} });
   }
 
   reset() {
-    sendMessage({ type: 'recorder:reset', payload: {} });
+    this.sendMessage({ type: 'recorder:reset', payload: {} });
   }
 
   replay() {
-    sendMessage({ type: 'recorder:replay', payload: {} });
+    this.sendMessage({ type: 'recorder:replay', payload: {} });
+  }
+
+  sendMessage(message: Message) {
+    window.parent.postMessage(message, '*');
   }
 }
 
-const sendMessage = (message: Message) => {
-  this.window.parent.postMessage(message, '*');
-};

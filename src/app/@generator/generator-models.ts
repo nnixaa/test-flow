@@ -16,25 +16,37 @@ export interface TfTest {
   commandList: TfCommand[];
 }
 
+export enum TfCommandType {
+  EVENT = 'Event',
+  ASSERT = 'Assertion',
+}
+
+export enum TfAssertType {
+  EXIST = 'exist',
+  CONTAINS_TEXT = 'containsText',
+  HAS_CLASS = 'hasClass',
+}
+
+export enum TfEventType {
+  CLICK = 'click',
+  INPUT = 'input',
+  FOCUS = 'focus',
+}
+
 export interface TfCommand {
-  node: any;
+  // xpath
+  target: string;
   type: TfCommandType;
 }
 
-export enum TfCommandType {
-  EVENT = 'Event',
-  ASSERTION = 'Assertion',
-}
-
 export interface TfAssertCommand extends TfCommand {
-  assertType: 'exist' | 'not-exist' | 'contains';
-  expectVal: any;
+  assertType: TfAssertType;
+  expectedValue?: any;
 }
 
 export interface TfEventCommand extends TfCommand {
-  eventType: string;
-  eventParams: any;
-  target: any;
+  eventType: TfEventType;
+  eventParams?: any;
 }
 
 

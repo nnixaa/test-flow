@@ -18,8 +18,6 @@ export interface Message {
 export const initializeRecorder = () => {
   const recorder = new Recorder();
 
-  debugger;
-
   receiveMessage('recorder:start').subscribe(() => console.log('recorder:start'));
   receiveMessage('recorder:stop').subscribe(() => console.log('recorder:stop'));
   receiveMessage('recorder:reset').subscribe(() => console.log('recorder:reset'));
@@ -27,8 +25,10 @@ export const initializeRecorder = () => {
 };
 
 const receiveMessage = (messageType: MessageType) => {
-  return fromEvent<Message>(this.window, 'message')
+  return fromEvent<Message>(window, 'message')
     .pipe(
+      // @ts-ignore
+      map(({ data }) => data),
       filter((message: Message) => message.type === messageType),
       map((message: Message) => message.payload),
     );

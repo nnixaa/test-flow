@@ -3,9 +3,10 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'tf-welcome-component',
   template: `
-    <p>Welcome</p>
-    <a routerLink="/project">Project</a>
+    <img class="logo" src="/assets/icon-default.png" alt="Test Pup">
+    <a class="start-button" nbButton routerLink="/spec-list">Start</a>
   `,
+  styleUrls: [ './welcome.component.scss' ],
 })
 export class WelcomeComponent {
 }

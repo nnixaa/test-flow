@@ -4,17 +4,23 @@ import {
 import { environment } from '../../environments/environment';
 import { projectReducer, ProjectState } from 'src/app/state/project/project.reducer';
 import { specReducer, SpecState } from 'src/app/state/project/spec.reducer';
+import { testReducer, TestState } from './project/test.reducer';
+import { commandReducer, CommandState } from './project/command.reducer';
 
 export const nextId = () => `${new Date().getTime() + Math.random()}`;
 
 export interface AppState {
   project: ProjectState;
   specs: SpecState;
+  tests: TestState;
+  commands: CommandState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
   project: projectReducer,
   specs: specReducer,
+  tests: testReducer,
+  commands: commandReducer,
 };
 
 export function logger(reducer: ActionReducer<AppState>): ActionReducer<AppState> {
