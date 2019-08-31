@@ -23,7 +23,7 @@
   ],
   "background":{
     "scripts": [
-      "background/start.js"
+      "background/app.js"
     ]
   }
 }
