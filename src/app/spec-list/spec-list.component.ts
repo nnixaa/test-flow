@@ -26,7 +26,7 @@ import { getProject, Project } from 'src/app/state/project/project.reducer';
 
         <nb-list *ngIf="hasSpecs$ | async; else noSpecsText">
           <nb-list-item *ngFor="let spec of specs$ | async">
-            <a [routerLink]="['./spec', spec.id]">
+            <a [routerLink]="['/', spec.id, 'test-list']">
               <span class="subtitle-2">{{ spec.name }}</span>
             </a>
           </nb-list-item>
