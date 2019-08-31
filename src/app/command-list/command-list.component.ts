@@ -9,6 +9,7 @@ import { NbDialogService } from '@nebular/theme';
 import { AddCommandDialogComponent } from './add-test-dialog/add-command-dialog.component';
 import { Command, getCommandList } from '../state/project/command.reducer';
 import { Recorder } from '../recorder/recorder';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'tf-spec-component',
@@ -16,7 +17,12 @@ import { Recorder } from '../recorder/recorder';
     <nb-layout>
 
       <nb-layout-header fixed>
-        {{ (test$ | async)?.name }}
+
+        <button class="back" nbButton status="primary" (click)="back()">
+          <nb-icon icon="arrow-back-outline"></nb-icon>
+        </button>
+
+        <span class="subtitle-2 text-hint">{{ (test$ | async)?.name }}</span>
 
         <button class="create-button" nbButton ghost size="small" (click)="createTest()">
           New Command
@@ -67,11 +73,16 @@ export class CommandListComponent {
     private state: State<AppState>,
     private route: ActivatedRoute,
     private dialogService: NbDialogService,
+    private location: Location,
   ) {}
 
   createTest() {
     this.test$.pipe(take(1)).subscribe((test) => {
       this.dialogService.open(AddCommandDialogComponent, { context: { test } });
     });
+  }
+
+  back() {
+    this.location.back();
   }
 }

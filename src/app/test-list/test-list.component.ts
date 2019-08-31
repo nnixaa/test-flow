@@ -8,6 +8,7 @@ import { getTestList, Test } from '../state/project/test.reducer';
 import { NbDialogService } from '@nebular/theme';
 import { AddTestDialogComponent } from './add-test-dialog/add-test-dialog.component';
 import { getSpecList, Spec } from '../state/project/spec.reducer';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'tf-spec-component',
@@ -15,7 +16,12 @@ import { getSpecList, Spec } from '../state/project/spec.reducer';
     <nb-layout>
 
       <nb-layout-header fixed>
-        {{ (spec$ | async)?.name }}
+
+        <button class="back" nbButton status="primary" (click)="back()">
+          <nb-icon icon="arrow-back-outline"></nb-icon>
+        </button>
+
+        <span class="subtitle-2 text-hint">{{ (spec$ | async)?.name }}</span>
 
         <button class="create-button" nbButton ghost size="small" (click)="createTest()">
           New Test
@@ -64,11 +70,18 @@ export class TestListComponent {
 
   hasTests$: Observable<boolean> = this.tests$.pipe(map(tests => !!tests.length));
 
-  constructor(private state: State<AppState>, private route: ActivatedRoute, private dialogService: NbDialogService) {}
+  constructor(private state: State<AppState>,
+              private route: ActivatedRoute,
+              private dialogService: NbDialogService,
+              private location: Location) {}
 
   createTest() {
     this.spec$.pipe(take(1)).subscribe((spec) => {
       this.dialogService.open(AddTestDialogComponent, { context: { spec }});
     });
+  }
+
+  back() {
+    this.location.back();
   }
 }
