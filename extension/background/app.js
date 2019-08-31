@@ -9,12 +9,12 @@
   };
 
   const sendToActive = (type) => {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.tabs.sendMessage(tabs[0].id, { type: type });
     });
   };
 
-  chrome.browserAction.onClicked.addListener(function(tab) {
+  chrome.browserAction.onClicked.addListener((tab) => {
     if (appState.active) {
       sendToActive(STOP_APP);
       appState.active = false;

@@ -18,12 +18,12 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["content/run.js"]
+      "js": ["content.js"]
     }
   ],
   "background":{
     "scripts": [
-      "background/app.js"
+      "app.js"
     ]
   }
 }
