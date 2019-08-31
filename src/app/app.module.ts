@@ -19,7 +19,6 @@ import { reducers, metaReducers } from './state/root-reducer';
     BrowserModule,
     BrowserAnimationsModule,
     NbThemeModule.forRoot(),
-    NbLayoutModule,
     NbEvaIconsModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers, {
