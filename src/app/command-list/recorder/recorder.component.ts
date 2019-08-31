@@ -25,6 +25,10 @@ import { Recorder } from 'src/app/recorder/recorder';
         <nb-icon icon="trash-2"></nb-icon>
       </button>
     </div>
+    
+    <button class="control-button button-delete" nbButton ghost (click)="select()">
+      Select
+    </button>
   `,
   styleUrls: ['./recorder.component.scss'],
 })
@@ -68,5 +72,9 @@ export class RecorderComponent implements OnDestroy {
 
   replay() {
     this.recorder.replay();
+  }
+
+  select() {
+    this.recorder.select().subscribe(id => console.log('selected xpath: ', id));
   }
 }

@@ -1,6 +1,6 @@
 import { EventSelector, getInlineDefinition, getInlineInvocation, PrebootData, PrebootOptions } from 'preboot';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
+import { finalize, map, take } from 'rxjs/operators';
 
 import { RecordedEvent } from './model';
 import { Replayer } from './replayer';
@@ -38,6 +38,7 @@ export class Recorder {
 
   private replaying = false;
   private recording = false;
+  private selecting = false;
 
   private events = new BehaviorSubject<RecordedEvent[]>([]);
   readonly events$: Observable<RecordedEvent[]> = this.events.asObservable();
@@ -83,12 +84,21 @@ export class Recorder {
     this.events.next([]);
   }
 
+  select(): Observable<string> {
+    this.selecting = true;
+    return fromEvent(document, 'click').pipe(
+      take(1),
+      map((event: MouseEvent) => getXPathForElement(event.target)),
+      finalize(() => this.selecting = false),
+    );
+  }
+
   private setupEventHandler() {
     window.addEventListener('recorder', (e: any) => {
       const { detail: event } = e;
 
       // Don't emit new event if it's replay
-      if (this.replaying || !this.recording) {
+      if (this.replaying || !this.recording || this.selecting) {
         return;
       }
 
@@ -115,7 +125,7 @@ export class Recorder {
   }
 
   private handleEvent = (target: HTMLElement, event: Event) => {
-    const xpath = getXPathForElement(target);
+    const xpath = getXPath(target);
 
     window.dispatchEvent(new CustomEvent<any>('recorder', {
       detail: {
@@ -126,7 +136,8 @@ export class Recorder {
       },
     }));
 
-    function getXPathForElement(element) {
+    // Duplication required
+    function getXPath(element) {
       const idx = (sib, name) => sib
         ? idx(sib.previousElementSibling, name || sib.localName) + (sib.localName == name)
         : 1;
@@ -139,4 +150,17 @@ export class Recorder {
       return segs(element).join('/');
     }
   }
+}
+
+function getXPathForElement(element) {
+  const idx = (sib, name) => sib
+    ? idx(sib.previousElementSibling, name || sib.localName) + (sib.localName == name)
+    : 1;
+  const segs = elm => !elm || elm.nodeType !== 1
+    ? ['']
+    : elm.id && document.getElementById(elm.id) === elm
+      ? [`id("${elm.id}")`]
+      // @ts-ignore
+      : [...segs(elm.parentNode), `${elm.localName.toLowerCase()}[${idx(elm)}]`];
+  return segs(element).join('/');
 }
