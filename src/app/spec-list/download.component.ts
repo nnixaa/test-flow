@@ -27,18 +27,19 @@ export class DownloadComponent {
       url: 'app',
       specList: [
         {
-          name: 'first spec',
+          name: 'Add Item test',
           testList: [
             {
-              name: 'should click on button',
+              name: 'should add item',
               commandList: [
                 {
-                  target: 'button[nbButton]#2',
+                  target: '/html/body/ec-root/nb-layout/div[1]/div/div/div/div/nb-layout-column/d' +
+                    'iv[2]/ec-colors-panel/div[1]/ec-color-block/ec-color-selector/div/ec-input-color-picker/input',
                   type: TfCommandType.EVENT,
                   eventType: TfEventType.CLICK,
                 } as TfCommand,
                 {
-                  target: 'button[nbButton]#2',
+                  target: '//*[@id="cdk-overlay-2"]/nb-popover/nb-overlay-container/ec-color-picker',
                   type: TfCommandType.ASSERT,
                   assertType: TfAssertType.EXIST,
                 } as TfCommand,
@@ -46,43 +47,6 @@ export class DownloadComponent {
             },
           ],
         },
-        {
-          name: 'Second spec',
-          testList: [
-            {
-              name: 'should click on button',
-              commandList: [
-                {
-                  target: 'button[nbButton]#2',
-                  type: TfCommandType.EVENT,
-                  eventType: TfEventType.CLICK,
-                } as TfCommand,
-                {
-                  target: 'button[nbButton]#2',
-                  type: TfCommandType.ASSERT,
-                  assertType: TfAssertType.EXIST,
-                } as TfCommand,
-              ]
-            },
-            {
-              name: 'should input in text',
-              commandList: [
-                {
-                  target: 'input[nbInput]#1',
-                  type: TfCommandType.EVENT,
-                  eventType: TfEventType.INPUT,
-                  eventParams: 'text',
-                } as TfCommand,
-                {
-                  target: 'in[nbButton]#2',
-                  type: TfCommandType.ASSERT,
-                  assertType: TfAssertType.CONTAINS_TEXT,
-                  expectedValue: 'text',
-                } as TfCommand,
-              ]
-            },
-          ],
-        }
       ],
     };
 

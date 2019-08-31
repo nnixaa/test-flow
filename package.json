@@ -7,7 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
+    "e2e": "ng e2e --port 4201",
     "build:chrome": "ng build && webpack --mode=development && node scripts/extension-build.js",
     "build:chrome:prod": "ng build --prod && webpack && node scripts/extension-build.js"
   },
