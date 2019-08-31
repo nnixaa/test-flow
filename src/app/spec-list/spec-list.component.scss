@@ -18,4 +18,13 @@
   .download-button {
     color: white !important;
   }
+
+  .create-button {
+    margin-left: auto;
+    text-transform: capitalize;
+
+    nb-icon {
+      margin-left: 0.5rem;
+    }
+  }
 }
