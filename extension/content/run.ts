@@ -1,3 +1,5 @@
+import { initializeRecorder } from '../recorder/container';
+
 (() => {
 
   const START_APP = 'START_APP';
@@ -14,6 +16,8 @@
     document.body.appendChild(iframe);
 
     appElement = iframe;
+
+    initializeRecorder();
   };
 
   const removeApp = () => {
@@ -21,7 +25,7 @@
     appElement = null;
   };
 
-  chrome.runtime.onMessage.addListener(function (request) {
+  chrome.runtime.onMessage.addListener((request) => {
     if (request.type === START_APP) {
       createApp();
     }

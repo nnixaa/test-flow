@@ -8,6 +8,7 @@ import { getTestList, Test } from '../state/project/test.reducer';
 import { NbDialogService } from '@nebular/theme';
 import { AddCommandDialogComponent } from './add-test-dialog/add-command-dialog.component';
 import { Command, getCommandList } from '../state/project/command.reducer';
+import { Recorder } from '../recorder/recorder';
 
 @Component({
   selector: 'tf-spec-component',
@@ -35,6 +36,11 @@ import { Command, getCommandList } from '../state/project/command.reducer';
           <p>No Tests</p>
         </ng-template>
 
+        <button nbButton (click)="start()">Start</button>
+        <button nbButton (click)="stop()">Stop</button>
+        <button nbButton (click)="reset()">Reset</button>
+        <button nbButton (click)="replay()">Replay</button>
+
       </nb-layout-column>
 
       <nb-layout-footer fixed>
@@ -46,7 +52,7 @@ import { Command, getCommandList } from '../state/project/command.reducer';
 
     </nb-layout>
   `,
-  styleUrls: [ './command-list.component.scss' ],
+  styleUrls: ['./command-list.component.scss'],
 })
 export class CommandListComponent {
 
@@ -62,11 +68,29 @@ export class CommandListComponent {
 
   hasCommands$: Observable<boolean> = this.commands$.pipe(map(tests => !!tests.length));
 
-  constructor(private state: State<AppState>, private route: ActivatedRoute, private dialogService: NbDialogService) {}
+  constructor(private state: State<AppState>, private route: ActivatedRoute, private dialogService: NbDialogService,
+              private recorder: Recorder) {
+  }
 
   createTest() {
     this.test$.pipe(take(1)).subscribe((test) => {
-      this.dialogService.open(AddCommandDialogComponent, { context: { test }});
+      this.dialogService.open(AddCommandDialogComponent, { context: { test } });
     });
+  }
+
+  start() {
+    this.recorder.start();
+  }
+
+  stop() {
+    this.recorder.stop();
+  }
+
+  reset() {
+    this.recorder.reset();
+  }
+
+  replay() {
+    this.recorder.replay();
   }
 }
