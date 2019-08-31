@@ -6,6 +6,7 @@ import { projectReducer, ProjectState } from 'src/app/state/project/project.redu
 import { specReducer, SpecState } from 'src/app/state/project/spec.reducer';
 import { testReducer, TestState } from './project/test.reducer';
 import { commandReducer, CommandState } from './project/command.reducer';
+import { recorderReducer, RecorderState } from 'src/app/state/project/recorder.reducer';
 
 export const nextId = () => `${new Date().getTime() + Math.random()}`;
 
@@ -14,6 +15,7 @@ export interface AppState {
   specs: SpecState;
   tests: TestState;
   commands: CommandState;
+  recorder: RecorderState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -21,6 +23,7 @@ export const reducers: ActionReducerMap<AppState> = {
   specs: specReducer,
   tests: testReducer,
   commands: commandReducer,
+  recorder: recorderReducer,
 };
 
 export function logger(reducer: ActionReducer<AppState>): ActionReducer<AppState> {

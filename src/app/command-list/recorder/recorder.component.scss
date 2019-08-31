@@ -1,0 +1,44 @@
+@import '../../../themes';
+
+@include nb-install-component() {
+
+  .control-buttons {
+    display: flex;
+    margin: 0 -0.5rem;
+  }
+
+  .circle-icon {
+    border-radius: 50%;
+    background: white;
+    margin-right: 0.5rem;
+    height: 1em;
+    width: 1em;
+
+    &.glow {
+      animation: record-glow 1s infinite alternate;
+    }
+  }
+
+  @keyframes record-glow {
+    from {
+      background: nb-theme(color-danger-500);
+    }
+
+    to {
+      background: nb-theme(color-danger-700);
+    }
+  }
+
+  .control-button {
+    margin: 0 0.5rem;
+  }
+
+  [nbbutton].button-play.status-primary,
+  [nbbutton].button-delete.status-primary {
+    color: black;
+  }
+
+  .button-play {
+    margin-left: auto;
+  }
+}
