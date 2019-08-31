@@ -24,6 +24,11 @@ export class SpecGeneratorService {
       import { browser, element, by } from 'protractor'
 
       describe('${spec.name}', () => {
+
+        beforeEach(done => {
+           browser.get(${spec.url}).then(() => done());
+        });
+
         \n${testListString}\n
       });
     `;

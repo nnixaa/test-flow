@@ -18,10 +18,10 @@ export const getConvertedState: MemoizedSelector<AppState, TfProject> = createSe
     commandList: Command[]) => {
     return {
       name: project.name,
-      url: '#/',
       specList: specList.map((spec: Spec) => {
         return {
           name: spec.name,
+          url: '#/',
           testList: convertTestListForSpec(spec.id, testList, commandList),
         };
       }),
