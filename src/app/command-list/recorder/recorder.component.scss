@@ -37,6 +37,8 @@
   [nbbutton].button-play.status-primary,
   [nbbutton].button-delete.status-primary {
     color: black;
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
     &:hover {
       color: #696969;
     }

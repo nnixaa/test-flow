@@ -13,15 +13,16 @@ import { Recorder } from 'src/app/recorder/recorder';
       <button class="control-button button-record"
               nbButton
               status="danger"
+              size="small"
               (click)="toggleRecording()"
               [appearance]="(isRecording$ | async) ? 'outline' : 'filled'">
         <div class="circle-icon" [class.glow]="isRecording$ | async"></div>
         {{ (isRecording$ | async) ? 'Stop Recording' : 'Record Screen' }}
       </button>
-      <button class="control-button button-play" size="large" nbButton ghost (click)="replay()">
+      <button class="control-button button-play" size="small" nbButton ghost (click)="replay()">
         <nb-icon icon="arrow-right"></nb-icon>
       </button>
-      <button class="control-button button-delete" nbButton ghost (click)="reset()">
+      <button class="control-button button-delete" nbButton ghost (click)="reset()" size="small">
         <nb-icon icon="trash-2"></nb-icon>
       </button>
     </div>

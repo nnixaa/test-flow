@@ -1,13 +1,26 @@
 import { Action, createAction, createReducer, createSelector, on, props } from '@ngrx/store';
 import { AppState } from 'src/app/state/root-reducer';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import { Test } from './test.reducer';
+import { TfAssertType, TfCommandType, TfEventType } from 'src/app/@generator/generator-models';
 
-export interface Command {
-  id: string;
-  name: string;
-  test: Test;
+export interface BaseCommand {
+  // xpath
+  target: string;
+  type: TfCommandType;
+  test: { id: string };
 }
+
+export interface AssertCommand extends BaseCommand {
+  assertType: TfAssertType;
+  expectedValue?: any;
+}
+
+export interface EventCommand extends BaseCommand {
+  eventType: TfEventType;
+  eventParams?: any;
+}
+
+export type Command = AssertCommand | EventCommand;
 
 export interface CommandState extends EntityState<Command> {}
 
