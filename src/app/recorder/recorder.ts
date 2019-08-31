@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
+import { filter, map, take } from 'rxjs/operators';
 
 export type MessageType =
   'recorder:start' |
   'recorder:stop' |
   'recorder:reset' |
-  'recorder:replay';
+  'recorder:replay' |
+  'recorder:select' |
+  'recorder:select:done';
 
 export interface Message {
   type: MessageType;
@@ -49,6 +52,17 @@ export class Recorder {
 
   replay() {
     this.sendMessage({ type: 'recorder:replay', payload: { events: this.events.getValue() } });
+  }
+
+  select(): Observable<string> {
+    this.sendMessage({ type: 'recorder:select', payload: {} });
+
+    return fromEvent(window, 'message')
+      .pipe(
+        filter((event: any) => event.data.type === 'recorder:select:done'),
+        take(1),
+        map((event: any) => event.data.payload.xpath),
+      );
   }
 
   sendMessage(message: Message) {
