@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, State, Store } from '@ngrx/store';
-import { AppState } from 'src/app/state/root-reducer';
+import { AppState, nextId } from 'src/app/state/root-reducer';
 import { Observable, Subject } from 'rxjs';
 import { map, take, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
@@ -116,6 +116,7 @@ export class CommandListComponent implements OnInit, OnDestroy {
   private toCommand(events: RecordedEvent[]): Command[] {
     return events.map(e => {
       return {
+        id: nextId(),
         type: TfCommandType.EVENT,
         target: e.xpath,
         eventType: this.mapEventType(e.type),

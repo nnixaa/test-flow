@@ -8,6 +8,7 @@ export interface BaseCommand {
   target: string;
   type: TfCommandType;
   test: { id: string };
+  id: string;
 }
 
 export interface AssertCommand extends BaseCommand {
@@ -24,7 +25,9 @@ export type Command = AssertCommand | EventCommand;
 
 export interface CommandState extends EntityState<Command> {}
 
-const adapter = createEntityAdapter<Command>();
+const adapter = createEntityAdapter<Command>({
+  selectId: model => model.id,
+});
 
 const initialState: CommandState = adapter.getInitialState({});
 

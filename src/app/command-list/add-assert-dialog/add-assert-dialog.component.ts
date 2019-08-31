@@ -50,7 +50,24 @@ import { take, takeUntil, takeWhile } from 'rxjs/operators';
                 [formControl]="assert"
                 fullWidth>
                 <nb-option value="exist">toBeTruthy</nb-option>
+                <nb-option value="containsText">containsText</nb-option>
+                <nb-option value="hasClass">hasClass</nb-option>
               </nb-select>
+            </div>
+
+            <div class="form-row" *ngIf="assert.value === 'containsText' || assert.value === 'hasClass' ">
+              <label class="label">
+                Value:
+              </label>
+
+              <input
+                type="text"
+                nbInput
+                placeholder="Value"
+                fieldSize="small"
+                fullWidth
+                name="value"
+                [formControl]="value">
             </div>
           </nb-card-body>
           <nb-card-footer>
@@ -69,6 +86,11 @@ export class AddAssertDialogComponent {
   selecting = false;
 
   assert: FormControl = new FormControl(
+    '',
+    [],
+  );
+
+  value: FormControl = new FormControl(
     '',
     [
       Validators.required,
@@ -89,9 +111,11 @@ export class AddAssertDialogComponent {
   create() {
     this.store.dispatch(commandAddAction({
       command: {
+        id: nextId(),
         type: this.assert.value.trim(),
         test: this.test,
         target: this.selectedElement,
+        expectedValue: this.value,
       }
     }));
     this.close();
