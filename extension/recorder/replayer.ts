@@ -1,6 +1,6 @@
 import { EventReplayer } from 'preboot';
 import { Observable, of } from 'rxjs';
-import { catchError, concatMap, delay, map, tap } from 'rxjs/operators';
+import { concatMap, delay, finalize, map, tap } from 'rxjs/operators';
 import { fromArray } from 'rxjs/internal/observable/fromArray';
 
 import { RecordedEvent } from './model';
@@ -8,12 +8,24 @@ import { RecordedEvent } from './model';
 
 export class Replayer extends EventReplayer {
   replay(events: RecordedEvent[]): Observable<void> {
+    let resetStyles;
     return fromArray(events).pipe(
       // delay each item
       concatMap((event: RecordedEvent) => of(event).pipe(delay(500))),
       concatMap((event: RecordedEvent) => {
 
-        const target = getElementByXPath(event.xpath);
+        if (resetStyles) {
+          resetStyles();
+        }
+
+        const target: HTMLElement = getElementByXPath(event.xpath) as HTMLElement;
+
+        const oldShadow = target.style.boxShadow;
+        target.style.boxShadow = '0px 0px 0px 4px red';
+        resetStyles = () => {
+          target.style.boxShadow = oldShadow;
+        };
+
 
         if (event.type === 'input') {
           return fromArray([...event.data]).pipe(
@@ -32,9 +44,11 @@ export class Replayer extends EventReplayer {
 
         return of();
       }),
-      catchError((err) => {
-        debugger;
-        return of();
+      finalize(() => {
+
+        if (resetStyles) {
+          resetStyles();
+        }
       }),
       map(() => {
       }),
