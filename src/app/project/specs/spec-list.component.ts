@@ -8,16 +8,19 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'tf-spec-list-component',
   template: `
-    <ul nbList *ngIf="hasSpecs$ | async; else noSpecsText">
-      <li *ngFor="let spec of specs$ | async">
-        <a [routerLink]="['./spec', spec.id]">{{ spec.name }}</a>
-      </li>
-    </ul>
+    <nb-list *ngIf="hasSpecs$ | async; else noSpecsText">
+      <nb-list-item *ngFor="let spec of specs$ | async">
+        <a [routerLink]="['./spec', spec.id]">
+          <span class="subtitle-2">{{ spec.name }}</span>
+        </a>
+      </nb-list-item>
+    </nb-list>
 
     <ng-template #noSpecsText>
       <p>No Specs</p>
     </ng-template>
   `,
+  styleUrls: [ './spec-list.component.scss' ],
 })
 export class SpecListComponent {
   specs$: Observable<Spec[]> = this.store.pipe(
