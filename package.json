@@ -28,7 +28,7 @@
     "@ngrx/store": "^8.3.0",
     "eva-icons": "^1.1.1",
     "file-saver": "^2.0.2",
-    "jszip": "^3.2.2",
+    "jszip": "^3.7.0",
     "preboot": "^7.0.0",
     "prettier": "^1.18.2",
     "rxjs": "~6.4.0",
